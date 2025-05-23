@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central Space Program</title>
+  <link rel="icon" href="fav.png">
+  <style>
+    body { font-family: sans-serif; margin:0; padding:0; background:#f4f4f4; }
+    header { display:flex; align-items:center; justify-content:space-between; padding:10px 20px; background:#222; }
+    header img.logo { height:40px; }
+    nav ul { list-style:none; margin:0; padding:0; display:flex; }
+    nav li { margin:0 15px; }
+    nav a { color:#fff; text-decoration:none; font-weight:500; position:relative; }
+    nav a::after { content:''; position:absolute; width:0; height:2px; background:#fff; left:0; bottom:-4px; transition:width .3s; }
+    nav a:hover::after { width:100%; }
+    .carousel { position: relative; overflow: hidden; height:400px; }
+    .carousel-slide { display: flex; transition: transform 0.5s ease; }
+    .carousel-item { min-width:100%; position:relative; }
+    .carousel-item img { width:100%; height:400px; object-fit:cover; }
+    .carousel-item button { position:absolute; bottom:20px; right:20px; padding:10px 15px; background:#007bff; color:#fff; border:none; cursor:pointer; transition:background .3s; }
+    .carousel-item button:hover { background:#0056b3; }
+    .latest { padding:40px 20px; max-width:1000px; margin:auto; }
+    .latest h2 { margin-bottom:20px; }
+    .posts { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:20px; }
+    .post { background:#fff; padding:20px; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.1); transition:transform .3s; }
+    .post:hover { transform:translateY(-5px); }
+    footer { background:#222; color:#ccc; text-align:center; padding:20px; margin-top:40px; }
+    footer a { color:#fff; text-decoration:none; margin:0 10px; transition:color .3s; }
+    footer a:hover { color:#007bff; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <img src="logo.png" alt="CSP Logo" class="logo">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="missions.html">Missions</a></li>
+        <li><a href="latest.html">Latest</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Carousel -->
+  <div class="carousel">
+    <div class="carousel-slide" id="carouselSlide"></div>
+  </div>
+
+  <!-- Latest from CSP -->
+  <section class="latest">
+    <h2>Latest from CSP</h2>
+    <div class="posts" id="latestPosts"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Central Space Program. All rights reserved.</p>
+    <p>
+      <a href="#">Privacy Policy</a> |
+      <a href="#">Terms of Use</a>
+    </p>
+  </footer>
+
+  <script>
+    // JSON data for easy editing
+    const data = {
+      missions: [
+        { title: "Stellar Jay Launch", img: "stj.jpg", link: "missions.html#stj-recap" },
+        { title: "Electric Eagle Test", img: "ee.jpg", link: "missions.html#ee-recap" },
+        { title: "Quad Propulsion Demo", img: "qp.jpg", link: "missions.html#qp-recap" }
+      ],
+      posts: [
+        { title:"Egg Drop Article", excerpt:"Comparing altitudes achieved...", link:"latest.html#egg-drop" },
+        { title:"Reusable Booster Insight", excerpt:"How we extended flight time...", link:"latest.html#booster" },
+        { title:"New PID Controller", excerpt:"Universal gains for any vehicle...", link:"latest.html#pid" }
+      ]
+    };
+
+    // Populate carousel
+    const slideContainer = document.getElementById('carouselSlide');
+    data.missions.forEach(m => {
+      const item = document.createElement('div');
+      item.className = 'carousel-item';
+      item.innerHTML = `
+        <img src="${m.img}" alt="${m.title}">
+        <button onclick="location.href='${m.link}'">Recap</button>
+      `;
+      slideContainer.appendChild(item);
+    });
+
+    // Auto-slide
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % data.missions.length;
+      slideContainer.style.transform = `translateX(-${idx*100}%)`;
+    }, 5000);
+
+    // Populate Latest posts
+    const postsContainer = document.getElementById('latestPosts');
+    data.posts.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'post';
+      card.innerHTML = `
+        <h3>${p.title}</h3>
+        <p>${p.excerpt}</p>
+        <a href="${p.link}">Read more</a>
+      `;
+      postsContainer.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>
