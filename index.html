@@ -71,7 +71,7 @@
     const data = {
       missions: [
         { title: "Stellar Jay SJ-1 ", img: "stj.png", link: "missions.html#stj-recap" },
-        { title: "Testing Drones on Rockets", img: "ee.jpg", link: "missions.html#ee-recap" },
+        { title: "Testing Drones on Rockets", img: "ee.png", link: "missions.html#ee-recap" },
       ],
       posts: [
         { title:"New PID Controller", excerpt:"Universal gains for any vehicle...", link:"latest.html#pid" }
@@ -85,7 +85,7 @@
       item.className = 'carousel-item';
       item.innerHTML = `
         <img src="${m.img}" alt="${m.title}">
-        <button onclick="location.href='${m.link}'">Recap</button>
+        <button onclick="location.href='${m.link}'"></button>
       `;
       slideContainer.appendChild(item);
     });
