@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal PID Controller Guide | CSP</title>
+  <link rel="icon" href="fav.png">
+  <style>
+    body { font-family: sans-serif; margin:0; padding:0; background:#eef2f5; color:#333; }
+    header, footer { display:flex; align-items:center; justify-content:space-between; padding:15px 30px; background:#1a1a1a; color:#fff; }
+    header img.logo { height:50px; }
+    nav ul { list-style:none; margin:0; padding:0; display:flex; }
+    nav li { margin:0 20px; }
+    nav a { color:#fff; text-decoration:none; font-weight:500; position:relative; }
+    nav a::after { content:''; position:absolute; width:0; height:2px; background:#fff; left:0; bottom:-4px; transition:width .3s; }
+    nav a:hover::after, nav a.active::after { width:100%; }
+    main.blog { max-width:800px; margin:50px auto; padding:0 20px; background:#fff; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+    .post-header { padding:40px 20px; border-bottom:1px solid #ddd; }
+    .post-header h1 { margin:0; font-size:2rem; }
+    .post-meta { margin-top:8px; color:#666; font-size:0.9rem; }
+    .post-content { padding:20px; line-height:1.6; }
+    pre { background:#f4f4f4; padding:15px; border-radius:4px; overflow-x:auto; }
+    h2 { margin-top:30px; color:#007bff; }
+    footer p { margin:0; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="CSP Logo" class="logo">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="missions.html">Missions</a></li>
+        <li><a href="latest.html">Latest</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="blog">
+    <div class="post-header">
+      <h1>Universal PID Controller Guide</h1>
+      <p class="post-meta">Published on May 17, 2025 by Central Space Program Team</p>
+    </div>
+    <div class="post-content">
+      <h2>Introduction</h2>
+      <p>PID (Proportional-Integral-Derivative) controllers are essential for maintaining stable flight in our rocket and drone projects. This guide walks you through setting up a universal PID loop that works across multiple vehicles.</p>
+
+      <h2>Understanding the PID Terms</h2>
+      <ul>
+        <li><strong>P</strong> (Proportional): Corrects current error.</li>
+        <li><strong>I</strong> (Integral): Eliminates residual steady-state error.</li>
+        <li><strong>D</strong> (Derivative): Predicts future error to dampen overshoot.</li>
+      </ul>
+
+      <h2>Sample Code (MakeCode / JavaScript)</h2>
+      <pre><code>// Initialize gains
+let Kp = 1.2;
+let Ki = 0.05;
+let Kd = 0.01;
+
+// PID state
+let integral = 0;
+let lastError = 0;
+
+function computePID(setpoint, measured) {
+  const error = setpoint - measured;
+  integral += error;
+  const derivative = error - lastError;
+  lastError = error;
+  return Kp * error + Ki * integral + Kd * derivative;
+}
+</code></pre>
+
+      <h2>Calibration Procedure</h2>
+      <ol>
+        <li>Start with Ki and Kd at zero. Increase Kp until the system oscillates.</li>
+        <li>Adjust Ki to remove steady-state offset.</li>
+        <li>Tune Kd to dampen overshoot and improve stability.</li>
+        <li>Test across multiple vehicle setups and record the optimal gains.</li>
+      </ol>
+
+      <h2>Deploying on micro:bit</h2>
+      <p>Upload the code to your micro:bit using MakeCode. Use the built-in accelerometer or gyroscope readings as the feedback input, and control motor outputs accordingly.</p>
+
+      <h2>Conclusion</h2>
+      <p>With these settings, you can copy the same PID routine into different flight computers. Adjust the gains slightly based on your vehicle's mass and thrust characteristics, but the core loop will remain consistent.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Central Space Program. All rights reserved.</p>
+  </footer>
+</body>
+</html>
