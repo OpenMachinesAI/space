@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact CSP</title>
+  <link rel="icon" href="fav.png">
+  <style>
+    body { font-family: sans-serif; margin:0; padding:0; background:#eef2f5; color:#333; }
+    header, footer { display:flex; align-items:center; justify-content:space-between; padding:15px 30px; background:#1a1a1a; color:#fff; }
+    header img.logo { height:50px; }
+    nav ul { list-style:none; margin:0; padding:0; display:flex; }
+    nav li { margin:0 20px; }
+    nav a { color:#fff; text-decoration:none; font-weight:500; position:relative; }
+    nav a::after { content:''; position:absolute; width:0; height:2px; background:#fff; left:0; bottom:-4px; transition:width .3s; }
+    nav a:hover::after, nav a.active::after { width:100%; }
+    main.contact { max-width:600px; margin:100px auto; padding:0 20px; text-align:center; }
+    .contact-header h1 { font-size:2rem; color:#007bff; margin-bottom:20px; }
+    .contact-info { background:#fff; padding:30px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+    .contact-info p { margin:10px 0; font-size:1rem; }
+    .contact-info a { color:#007bff; text-decoration:none; }
+    .contact-info a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="CSP Logo" class="logo">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="missions.html">Missions</a></li>
+        <li><a href="latest.html">Latest</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="contact">
+    <div class="contact-header">
+      <h1>Contact Us</h1>
+    </div>
+    <div class="contact-info">
+      <p>For inquiries, please email us at:</p>
+      <p><a href="mailto:alex.mzt2024@gmail.com">alex.mzt2024@gmail.com</a></p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Central Space Program. All rights reserved.</p>
+  </footer>
+</body>
+</html>
