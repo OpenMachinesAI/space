@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latest from CSP</title>
+  <link rel="icon" href="fav.png">
+  <style>
+    body { font-family: sans-serif; margin:0; padding:0; background:#eef2f5; }
+    header, footer { display:flex; align-items:center; justify-content:space-between; padding:15px 30px; background:#1a1a1a; color:#fff; }
+    header img.logo { height:50px; }
+    nav ul { list-style:none; margin:0; padding:0; display:flex; }
+    nav li { margin:0 20px; }
+    nav a { color:#fff; text-decoration:none; font-weight:500; position:relative; }
+    nav a::after { content:''; position:absolute; width:0; height:2px; background:#fff; left:0; bottom:-4px; transition:width .3s; }
+    nav a:hover::after, nav a.active::after { width:100%; }
+    main.latest { max-width:1100px; margin:50px auto; padding:0 20px; }
+    .posts-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; }
+    .post-card { background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1); transition:transform .3s; }
+    .post-card:hover { transform:translateY(-5px); }
+    .post-header { background:#28a745; color:#fff; padding:15px; }
+    .post-header h3 { margin:0; font-size:1.25rem; }
+    .post-body { padding:20px; }
+    .post-body p { margin:0 0 15px; color:#555; }
+    .btn { padding:10px 16px; border:none; border-radius:4px; font-size:0.9rem; cursor:pointer; transition:background .3s; }
+    .btn-info { background:#17a2b8; color:#fff; }
+    .btn-info:hover { background:#117a8b; }
+    /* Modal */
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; padding:20px; }
+    .modal-content { background:#fff; padding:25px; border-radius:8px; max-width:600px; width:100%; position:relative; box-shadow:0 4px 15px rgba(0,0,0,0.2); }
+    .modal-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:1.5rem; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="CSP Logo" class="logo">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="missions.html">Missions</a></li>
+        <li><a href="latest.html" class="active">Latest</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="latest">
+    <h2>Latest from CSP</h2>
+    <div class="posts-grid" id="latestContainer"></div>
+  </main>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Central Space Program. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Sample latest posts JSON
+    const posts = [
+      { id:1, title:"Egg Drop Analysis", date:"2025-05-20", excerpt:"Comparing max altitudes of electric vs solid propulsion", content:"Detailed data on altitude, battery consumption, and safety metrics.", link:"reports/egg-drop.html" },
+      { id:2, title:"Reusable Booster Case Study", date:"2025-05-18", excerpt:"Insights on our propulsive landing performance improvements", content:"Lessons learned and upcoming improvements for higher reliability.", link:"reports/booster.html" },
+      { id:3, title:"Universal PID Controller Guide", date:"2025-05-17", excerpt:"Step-by-step on setting up consistent PID gains", content:"Code examples and calibration procedures for micro:bit setups.", link:"reports/pid-guide.html" }
+    ];
+
+    // Sort by date descending
+    posts.sort((a,b)=>new Date(b.date)-new Date(a.date));
+    const container = document.getElementById('latestContainer');
+
+    posts.forEach(p=>{
+      const card = document.createElement('div');
+      card.className = 'post-card';
+      card.innerHTML = `
+        <div class="post-header">
+          <h3>${p.title} <small style="font-size:0.8rem;opacity:0.8;">(${p.date})</small></h3>
+        </div>
+        <div class="post-body">
+          <p>${p.excerpt}</p>
+          <button class="btn btn-info" data-id="${p.id}">Read More</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    // Modal logic
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modalBody');
+    document.querySelectorAll('.btn-info').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const id = btn.getAttribute('data-id');
+        const post = posts.find(x=>x.id==id);
+        modalBody.innerHTML = `<h2>${post.title}</h2><p>${post.content}</p><p><a href='${post.link}' target='_blank'>Full Report</a></p>`;
+        modal.style.display='flex';
+      });
+    });
+    document.getElementById('modalClose').onclick = () => modal.style.display = 'none';
+    window.onclick = e => { if(e.target === modal) modal.style.display = 'none'; };
+  </script>
+</body>
+</html>
